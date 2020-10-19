@@ -24,19 +24,22 @@
 			global dropbox "C:/Users/Emilia/Dropbox"
 		}
     }
-    if "$user" == "jd" {
-        global myDocs  ""
-    }
+
 
 * **********************************************************************
 * 1 - Sub-directory globals
 * **********************************************************************
 * Create some sub-folder globals
-    global projectFolder          "$myDocs/Oolu"
+    global projectFolder          "${myDocs}/Oolu"
     global dataWork               "${projectFolder}/dataWork"
     global data                   "${dataWork}/data"
     global scripts                "${dataWork}/scripts"
     global logs                   "${scripts}/logs"
+
+* Create files if don't exist
+  qui: capture mkdir       "${dataWork}"
+  qui: capture mkdir       "${scripts}"
+  qui: capture mkdir       "${logs}"
 
 * **********************************************************************
 * 2 - Change ado directory so packages get installed in
