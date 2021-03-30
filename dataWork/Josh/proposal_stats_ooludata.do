@@ -2,7 +2,7 @@
 
 cd "D:\Dropbox\Research\Solar\Oolu Data\Nigeria"
 
-import excel using "Oolu_survey_20210321.xlsx", clear first allstring
+import excel using "Oolu_survey_20210329.xlsx", clear first allstring
 
 drop if call_info!="Customer is available (OK)"
 
@@ -67,7 +67,8 @@ append using temp1 temp2 temp3 temp4 temp5
 
 save oolu_nigeria_accounts_20210310, replace
 
-
+g sale_2018 = strpos(created_at,"2018")>0
+g sale_2019 = strpos(created_at,"2019")>0
 g sale_2020 = strpos(created_at,"2020")>0
 g sale_2021 = strpos(created_at,"2021")>0
 
@@ -98,7 +99,7 @@ replace hours_after1 = 0 if missing(hours_after1)
 g hours_diff = hours_after1 - hours_before1
 sum hours_diff, detail
 
-destring fuel_costs*, replace
+destring fuel_costs*, replace force
 replace fuel_costs_before = 0 if missing(fuel_costs_before)
 replace fuel_costs_after = 0 if missing(fuel_costs_after)
 g fuel_costs_diff = fuel_costs_after - fuel_costs_before 
