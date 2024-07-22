@@ -1,13 +1,13 @@
 
 /****
 *
-* This do file samples 50 households for the second round of discount offers
+* This do file samples 50 households for the third round of discount offers
 *
-* Josh Deutschmann, Feb 2024
+* Josh Deutschmann, May 2024
 *
 *****/
 
-global dropbox "D:/Dropbox/Collaborations"
+global dropbox "~/Dropbox/Collaborations"
 
 global baseline_data "$dropbox/Solar_Data/Baseline/clean"
 global sample_data "$dropbox/Oolu/Data/OPM baseline/Sample"
@@ -62,13 +62,13 @@ by status: g rand_order = _n
 
 * Oversample deactivated
 g treated_round3 = 0
-replace treated_round3 = 1 if rand_order<=20 & status=="deactivated" // oversample deactivated (20/41)
-replace treated_round3 = 1 if rand_order<=10 & status=="active"
+replace treated_round3 = 1 if rand_order<=30 & status=="deactivated" // oversample deactivated
+replace treated_round3 = 1 if rand_order<=20 & status=="active"
 
 save "$output_dir/treated_round3_assignment", replace
 
 * Prep excel sheet for Oolu
 keep if treated_round3==1
-drop survey_sample survey_order extra_replacement_order randsort rand_order treated_round2 original_sample
+drop survey_sample survey_order extra_replacement_order randsort rand_order treated_round3 original_sample
 order account_number status customer_full_name system_type resp_id
 export excel using "$output_dir/round3_discount_offers.xlsx", replace first(variables) 
